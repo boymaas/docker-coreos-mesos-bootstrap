@@ -34,3 +34,4 @@ coreos:
         ExecStartPre=/bin/sh -c "/usr/bin/docker history boymaas/docker-coreos-mesos-bootstrap:latest >/dev/null || /usr/bin/docker pull boymaas/docker-coreos-mesos-bootstrap:latest"
         ExecStart=/bin/sh -c "/usr/bin/docker run --rm --name mesos --net=host --privileged -p 5050:5050 -p 5051:5051 -p 2181:2181 -e MAIN_IP=$COREOS_PRIVATE_IPV4 -e DOCKER0_IP=`ifconfig docker0 | grep 'inet ' | awk '{print $2}'` -v /sys/fs/cgroup:/sys/fs/cgroup -v /var/run/docker.sock:/var/run/docker.sock boymaas/docker-coreos-mesos-bootstrap:latest"
         ExecStop=/usr/bin/docker rm -f mesos
+        ExecStop=-/usr/bin/docker rm -f marathon
