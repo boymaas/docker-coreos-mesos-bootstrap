@@ -278,9 +278,9 @@ if [[ ! -z ${MASTER_IP} ]]; then
 
     start_slave --master=zk://localhost:2181/mesos --etcd=true
 
-    # start Marathon
+    # start Marathon, only available on private address
     echo -e  "${bold}==> info: Starting Marathon in a separate container..."
-    docker run --rm --name marathon -p 8080:8080 boymaas/docker-coreos-mesos-bootstrap:latest marathon --master=zk://${MAIN_IP}:2181/mesos &
+    docker run --rm --name marathon -p $MAIN_IP:8080:8080 boymaas/docker-coreos-mesos-bootstrap:latest marathon --master=zk://${MAIN_IP}:2181/mesos &
 
 
     # While the master is running, keep publishing its IP to ETCD
