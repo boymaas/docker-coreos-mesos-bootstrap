@@ -107,13 +107,18 @@ function start_slave {
     echo /var/lib/mesos > /etc/mesos-slave/work_dir
     #echo external > /etc/mesos-slave/isolation
     #echo /usr/local/bin/deimos > /etc/mesos-slave/containerizer_path
+
+    echo 'docker,mesos' > /etc/mesos-slave/containerizers
+    echo '5mins' > /etc/mesos-slave/executor_registration_timeout
+
     echo ${MAIN_IP}  > /etc/mesos-slave/ip
     echo host:${MAIN_IP}  >/etc/mesos-slave/attributes
 
     echo -e  "${bold}==> info: Mesos slave will try to register with a master at ${MASTER}"
     echo -e  "${normal}==> info: Starting slave..."
 
-    /usr/bin/mesos-init-wrapper slave > /dev/null 2>&1 &
+    #/usr/bin/mesos-init-wrapper slave > /dev/null 2>&1 &
+    /usr/bin/mesos-init-wrapper slave &
 
 	# wait for the slave to start
     sleep 1 && while [[ -z $(netstat -lnt | awk "\$6 == \"LISTEN\" && \$4 ~ \".$SLAVE_PORT\" && \$1 ~ tcp") ]] ; do
