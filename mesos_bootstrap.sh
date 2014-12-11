@@ -280,6 +280,8 @@ if [[ ! -z ${MASTER_IP} ]]; then
 
     # start Marathon, only available on private address
     echo -e  "${bold}==> info: Starting Marathon in a separate container..."
+
+    docker rm -f marathon || true
     docker run --rm --name marathon -p $MAIN_IP:8080:8080 boymaas/docker-coreos-mesos-bootstrap:latest marathon --master=zk://${MAIN_IP}:2181/mesos &
 
 
