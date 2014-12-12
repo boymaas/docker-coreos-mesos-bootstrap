@@ -90,6 +90,7 @@ service rsyslog start > /dev/null 2>&1
 # All functions
 function start_zookeeper {
     echo -e  "${normal}==> info: Starting Zookeeper..."
+    chown zookeeper.zookeeper /var/lib/zookeeper
     service zookeeper start
 }
 
