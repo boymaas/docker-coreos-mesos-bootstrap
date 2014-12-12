@@ -183,6 +183,9 @@ function start_marathon {
         mkdir -p /etc/marathon/conf
     fi
 
+
+    # longer timeout, since docker containers need to be pulled
+    echo "300000" > /etc/marathon/conf/task_launch_timeout
     echo "http_callback" > /etc/marathon/conf/event_subscriber
     service marathon start > /dev/null 2>&1 &
 
