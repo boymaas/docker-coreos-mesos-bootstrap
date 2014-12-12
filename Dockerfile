@@ -51,6 +51,9 @@ RUN sudo apt-get -y install marathon=0.7.6-1.0
 ADD ./mesos_bootstrap.sh /usr/local/bin/mesos_bootstrap.sh
 
 # use the mesos_bootstrap.sh script to start
+
+# define the volumes keeping the mesos/zookeeper state
 VOLUME ["/var/lib/mesos"]
+VOLUME ["/var/lib/zookeeper"]
 
 ENTRYPOINT ["/usr/local/bin/mesos_bootstrap.sh"]
